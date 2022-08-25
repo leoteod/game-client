@@ -1,3 +1,3 @@
 <template>
-  <div>Home view</div>
+  <div>Homepage</div>
 </template>
