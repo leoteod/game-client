@@ -1,11 +1,13 @@
 import { useHttp } from "@/composables/useHttp";
 
 export function CharactersController() {
-  const { get, apiVersion, loading } = useHttp();
-  const route = "character";
+  const { fetch, loading } = useHttp();
+  const url = "character";
   async function index() {
-    const response = await get({
-      url: `${apiVersion}/${route}`,
+    const response = await fetch({
+      method: "get",
+      url,
+      delay: 1000,
     });
     if (!response.error) {
       return {

@@ -6,10 +6,11 @@ interface FormInterface {
 }
 
 export function AccountsController() {
-  const { post, apiVersion } = useHttp();
+  const { fetch } = useHttp();
   async function login(form: FormInterface) {
-    const response = await post<FormInterface>({
-      url: `${apiVersion}/auth/login`,
+    const response = await fetch<FormInterface>({
+      method: "post",
+      url: "auth/login",
       data: form,
       auth: false,
     });

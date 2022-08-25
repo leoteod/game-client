@@ -28,14 +28,18 @@ const router = createRouter({
   routes,
 });
 
+function returnRoutePath(name: string) {
+  return routes.find((route) => route.name === name)!.path;
+}
+
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/login"];
+  const publicPages = [returnRoutePath("homepage"), returnRoutePath("login")];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("token");
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {
-    next("/login");
+    next(returnRoutePath("login"));
   } else {
     next();
   }
