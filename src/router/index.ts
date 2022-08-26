@@ -21,6 +21,32 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/AboutView.vue"),
   },
+  {
+    path: "/game",
+    name: "game",
+    component: () => import("../pages/game/GamePage.vue"),
+    redirect: "/game/server",
+    children: [
+      {
+        path: "server",
+        name: "server",
+        component: () => import("../pages/game/server/GameServerPage.vue"),
+      },
+      {
+        path: "server/:id",
+        name: "server-id",
+        redirect: "/game/server",
+        children: [
+          {
+            path: "main",
+            name: "main",
+            component: () => import("../pages/game/main/GameMainPage.vue"),
+          },
+        ],
+      },
+    ],
+  },
+  { path: "/:catchAll(.*)", redirect: "/" },
 ];
 
 const router = createRouter({
