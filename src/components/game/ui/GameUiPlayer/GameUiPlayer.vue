@@ -5,7 +5,7 @@
   >
     <img
       class="w-full h-full block"
-      src="https://styles.redditmedia.com/t5_3jj2c/styles/profileIcon_j6qract1fgp61.png?width=256&height=256&crop=256:256,smart&s=b2c4a855f6576a4ed11e29b5f081e6dfb10b404b"
+      src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1341200/6c7da42b5fccb071fbaa8e3ec757ee13938e83e9.jpg"
       alt="Avatar"
     />
     <div
@@ -28,3 +28,16 @@ interface Props {
 
 const props = defineProps<Props>();
 </script>
+
+<style lang="scss" scoped>
+.level {
+  @apply opacity-80;
+}
+.avatar {
+  &:hover {
+    .level {
+      @apply opacity-100;
+    }
+  }
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="w-screen h-screen">
     <div v-if="loading">Loading...</div>
-    <div v-else>
+    <div class="w-full h-full" v-else>
       <game-ui-player :character="character.data" />
       <router-view :character="character.data" />
     </div>
