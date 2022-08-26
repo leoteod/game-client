@@ -41,6 +41,14 @@ const routes = [
             path: "main",
             name: "main",
             component: () => import("../pages/game/main/GameMainPage.vue"),
+            children: [
+              {
+                path: "town",
+                name: "town",
+                component: () =>
+                  import("../pages/game/main/town/GameMainTownPage.vue"),
+              },
+            ],
           },
         ],
       },
