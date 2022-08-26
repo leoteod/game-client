@@ -20,6 +20,7 @@
       <div
         data-area="battleArena"
         class="absolute top-[52%] left-[17%] w-[43%] h-[35%] flex items-center justify-center"
+        @click="$router.push({ name: 'arena' })"
       >
         <div
           class="bg-black text-white py-2 px-4 rounded border border-black bg-opacity-50 text-sm"

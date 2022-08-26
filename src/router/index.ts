@@ -48,6 +48,12 @@ const routes = [
                 component: () =>
                   import("../pages/game/main/town/GameMainTownPage.vue"),
               },
+              {
+                path: "arena",
+                name: "arena",
+                component: () =>
+                  import("../pages/game/main/arena/GameMainArenaPage.vue"),
+              },
             ],
           },
         ],
