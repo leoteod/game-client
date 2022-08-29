@@ -1,12 +1,12 @@
 import { useHttp } from "@/composables/useHttp";
 
-export function CharactersController() {
+export function ServersController() {
   const { fetch, loading } = useHttp();
-  const url = "character";
+  const url = "server";
   async function index() {
     const response = await fetch({
       method: "get",
-      url: `scoped/${url}`,
+      url: `public/${url}s`,
       delay: 1000,
     });
     if (!response.error) {
