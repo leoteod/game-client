@@ -1,6 +1,13 @@
 <template>
   <div class="w-screen h-screen">
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading">
+      <img
+        class="fixed top-0 right-0 bottom-0 left-0 object-fill w-full h-full"
+        src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/66853f18520863.562cad463d0eb.jpg"
+        alt=""
+      />
+      <game-ui-full-loader />
+    </div>
     <div class="w-full h-full" v-else>
       <game-ui-player :character="character.data" />
       <button
@@ -35,11 +42,12 @@ import { computed, onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
 const character = reactive<{ data: CharacterInterface | object }>({
   data: {},
 });
 const route = useRoute();
-const { index, loading } = CharactersController();
+const { scopedIndex, loading } = CharactersController();
 
 const path = computed(() => route.path);
 
@@ -51,7 +59,7 @@ onMounted(() => {
 });
 
 async function onGetCharacter() {
-  const response = await index();
+  const response = await scopedIndex();
   if (response.success) {
     character.data = response.data as CharacterInterface;
   }

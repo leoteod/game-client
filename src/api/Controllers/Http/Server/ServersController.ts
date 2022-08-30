@@ -20,5 +20,22 @@ export function ServersController() {
       };
     }
   }
-  return { index, loading };
+
+  async function scopedCharacterSelect(serverId: number, characterId: number) {
+    const response = await fetch({
+      method: "patch",
+      url: `scoped/${url}/${serverId}/${characterId}`,
+    });
+    if (!response.error) {
+      return {
+        success: true,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  }
+  return { index, scopedCharacterSelect, loading };
 }
