@@ -5,10 +5,10 @@
       src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/66853f18520863.562cad463d0eb.jpg"
       alt=""
     />
-    <div class="relative">
+    <div class="relative mt-[3vh]">
       <img
-        class="w-[50vh] m-auto"
-        src="https://assets.stickpng.com/images/62061920cdd94000043e3951.png"
+        class="w-[40vh] m-auto"
+        src="https://i.pinimg.com/originals/4c/99/c9/4c99c9c8236518c4ed584a297accee09.png"
         alt=""
       />
     </div>
@@ -40,7 +40,7 @@
       <div class="mt-[2vh] flex items-center justify-center">
         <ul
           v-if="!server"
-          class="h-[60vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
+          class="h-[55vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
         >
           <li
             class="w-[40vw] text-white bg-black bg-opacity-50 p-2 border border-white border-opacity-10 rounded flex gap-2"
@@ -83,7 +83,10 @@
             <span v-text="server.name" />
           </li>
         </ul>
-        <ul v-else>
+        <ul
+          class="h-[55vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
+          v-else
+        >
           <li
             class="w-[40vw] text-white bg-black bg-opacity-50 p-2 border border-white border-opacity-10 rounded flex gap-2"
             v-for="character in characters.data"
