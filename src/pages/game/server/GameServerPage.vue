@@ -5,7 +5,7 @@
       src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/66853f18520863.562cad463d0eb.jpg"
       alt=""
     />
-    <div class="relative mt-[3vh]">
+    <div class="relative pt-[3vh]">
       <img
         class="w-[40vh] m-auto"
         src="https://i.pinimg.com/originals/4c/99/c9/4c99c9c8236518c4ed584a297accee09.png"

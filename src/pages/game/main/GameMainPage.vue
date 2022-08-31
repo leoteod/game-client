@@ -43,6 +43,7 @@ import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
+import router from "@/router";
 const character = reactive<{ data: CharacterInterface | object }>({
   data: {},
 });
@@ -62,6 +63,10 @@ async function onGetCharacter() {
   const response = await scopedIndex();
   if (response.success) {
     character.data = response.data as CharacterInterface;
+  } else {
+    await router.push({
+      name: "server",
+    });
   }
 }
 </script>
