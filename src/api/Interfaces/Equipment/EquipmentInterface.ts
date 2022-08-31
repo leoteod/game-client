@@ -33,7 +33,7 @@ export interface EquipmentSuitOptionsInterface {
 
 export interface EquipmentInterface {
   id: number;
-  account_id: number;
+  [EnumEquipmentProps.character_id]: number;
   [EnumEquipmentProps.head_id]?: number;
   head?: EquipmentItemInterface | undefined;
   head_options?: EquipmentHeadOptionsInterface;

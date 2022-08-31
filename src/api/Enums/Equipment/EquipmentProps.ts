@@ -1,5 +1,5 @@
 export enum EnumEquipmentProps {
-  account_id = "account_id",
+  character_id = "character_id",
   head_id = "head_id",
   head_options = "head_options",
   suit_id = "suit_id",
