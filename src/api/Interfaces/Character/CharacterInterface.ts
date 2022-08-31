@@ -21,10 +21,11 @@ export interface CharacterInterface {
   [EnumCharacterProps.server_id]: number;
   [EnumCharacterProps.class]: number;
   [EnumCharacterProps.avatar]: string;
-  [EnumEquipmentItemProps.exp]: number;
+  [EnumCharacterProps.exp]: number;
   account: AccountInterface | undefined;
   equipment?: EquipmentInterface | object | undefined;
   // Automatically generated readonly props
   stats: CharacterStatsInterface | object;
-  [EnumEquipmentItemProps.level]?: number;
+  [EnumCharacterProps.level]?: number;
+  [EnumCharacterProps.nextLevelExp]?: number;
 }

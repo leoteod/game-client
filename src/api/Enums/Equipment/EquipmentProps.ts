@@ -9,7 +9,6 @@ export enum EnumEquipmentProps {
 export enum EnumEquipmentItemProps {
   type = "type",
   tier = "tier",
-  exp = "exp",
   hp = "hp",
   atk = "atk",
   def = "def",
