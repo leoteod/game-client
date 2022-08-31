@@ -17,8 +17,15 @@
           <li
             class="w-[40vw] text-white bg-black bg-opacity-50 p-2 border border-white border-opacity-10 rounded flex gap-2"
             v-for="arena in arenaCharacters.data"
-            :class="{ 'text-red-500': props.character.id === arena.character.id }"
+            :class="{
+              'text-red-500': props.character.id === arena.character.id,
+            }"
             :key="arena.id"
+            @click="
+              props.character.id === arena.character.id
+                ? false
+                : onBattle(arena.character.id)
+            "
           >
             <span v-text="`Rank: ${arena.rank}`" />
             <span
@@ -47,16 +54,27 @@ const props = defineProps<Props>();
 const arenaCharacters = reactive<{ data: ArenaInterface[] | [] }>({
   data: [],
 });
-const { publicIndex, loading } = ArenaController();
+const { publicIndex, loading, scopedCombat } = ArenaController();
 
-onMounted(() => {
-  onGetArenaCharacter();
+onMounted(async () => {
+  await onGetArenaCharacter();
 });
 
 async function onGetArenaCharacter() {
   const response = await publicIndex();
   if (response.success) {
     arenaCharacters.data = response.data as ArenaInterface[];
+  }
+}
+
+async function onBattle(defenderId: number) {
+  const response = await scopedCombat(defenderId);
+  if (response.success) {
+    if (response.data.results.winner_id === props.character.id) {
+      await onGetArenaCharacter();
+    } else {
+      alert("lost");
+    }
   }
 }
 </script>
