@@ -7,7 +7,7 @@ export function ArenaController() {
     const response = await fetch({
       method: "get",
       url: `public/${url}`,
-      delay: 1000,
+      delay: 250,
     });
     if (!response.error) {
       return {

@@ -1,6 +1,11 @@
 <template>
+  <img
+    class="fixed top-0 right-0 bottom-0 left-0 z-50 object-fill w-full h-full"
+    src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f175fa18520003.562cad126b089.jpg"
+    alt=""
+  />
   <div
-    class="fixed top-0 right-0 bottom-0 left-0 z-10 flex items-center justify-center"
+    class="fixed top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center"
   >
     <svg
       class="animate-spin h-14 w-14 text-black"

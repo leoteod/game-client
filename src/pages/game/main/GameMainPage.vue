@@ -1,5 +1,6 @@
 <template>
   <div class="w-screen h-screen">
+    <game-ui-init-loader v-if="initialLoading" />
     <div v-if="loading">
       <img
         class="fixed top-0 right-0 bottom-0 left-0 object-fill w-full h-full"
@@ -13,7 +14,7 @@
       <button
         v-if="!path.includes('/main/town')"
         @click="$router.push({ name: 'town' })"
-        class="fixed top-2 right-2 border border-black bg-black bg-opacity-75 w-12 h-12 flex items-center justify-center text-white rounded-lg"
+        class="fixed top-2 right-2 z-40 border border-black bg-black bg-opacity-75 w-12 h-12 flex items-center justify-center text-white rounded-lg"
         type="button"
       >
         <svg
@@ -38,12 +39,13 @@
 
 <script setup lang="ts">
 import { CharactersController } from "@/api/Controllers/Http/Character/CharactersController";
-import { computed, onMounted, reactive } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
 import router from "@/router";
+import GameUiInitLoader from "@/components/game/ui/GameUiInitLoader/GameUiInitLoader.vue";
 const character = reactive<{ data: CharacterInterface | object }>({
   data: {},
 });
@@ -52,11 +54,13 @@ const { scopedIndex, loading } = CharactersController();
 
 const path = computed(() => route.path);
 
-onMounted(() => {
-  console.log("route", path.value);
+const initialLoading = ref(false);
+onMounted(async () => {
+  initialLoading.value = true;
   if (path.value !== "/game/server") {
-    onGetCharacter();
+    await onGetCharacter();
   }
+  initialLoading.value = false;
 });
 
 async function onGetCharacter() {
