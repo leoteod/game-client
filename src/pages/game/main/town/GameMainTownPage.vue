@@ -33,9 +33,7 @@
         class="absolute text-white top-[52%] left-[17%] w-[43%] h-[35%] flex items-center justify-center text-center"
       >
         <div class="mt-4">
-          <div
-            class="bg-black bg-opacity-50 border border-black p-2 rounded-lg inline-block"
-          >
+          <div class="bg-black border border-black p-2 rounded-lg inline-block">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
