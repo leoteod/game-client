@@ -25,7 +25,7 @@ export interface CharacterInterface {
   account: AccountInterface | undefined;
   equipment?: EquipmentInterface | object | undefined;
   // Automatically generated readonly props
-  stats: CharacterStatsInterface | object;
+  stats: CharacterStatsInterface;
   [EnumCharacterProps.level]?: number;
   [EnumCharacterProps.nextLevelExp]?: number;
 }

@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        xxs: ".65rem",
+      },
+    },
     screens: {
       mobile: "320px",
       // => @media (min-width: 640px) { ... }
