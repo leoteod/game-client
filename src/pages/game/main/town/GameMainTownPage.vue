@@ -13,7 +13,7 @@
         class="absolute top-[23%] left-[23%] w-[13%] h-[22%] pt-2 flex items-start justify-center"
       >
         <div
-          class="bg-black text-white py-2 px-4 rounded border border-black bg-opacity-50 text-sm"
+          class="bg-black text-white py-1 px-4 rounded border border-black bg-opacity-50 text-sm"
         >
           Campaign
         </div>
@@ -24,7 +24,7 @@
         @click="$router.push({ name: 'arena' })"
       >
         <div
-          class="bg-black text-white py-2 px-4 rounded border border-black bg-opacity-50 text-sm"
+          class="bg-black text-white py-1 px-4 rounded border border-black bg-opacity-50 text-sm"
         >
           Battle Arena
         </div>
@@ -62,7 +62,7 @@
         class="absolute top-[51%] left-[1%] w-[16%] h-[15%] flex items-start justify-center"
       >
         <div
-          class="bg-black text-white py-2 px-4 rounded border border-black bg-opacity-50 text-sm"
+          class="bg-black text-white py-1 px-4 rounded border border-black bg-opacity-50 text-sm"
         >
           Skill Tree
         </div>
@@ -100,7 +100,7 @@
         class="absolute top-[51%] right-[6%] w-[22%] h-[24%] flex items-start justify-center"
       >
         <div
-          class="bg-black text-white py-2 px-4 rounded border border-black bg-opacity-50 text-sm"
+          class="bg-black text-white py-1 px-4 rounded border border-black bg-opacity-50 text-sm"
         >
           Dungeon
         </div>
