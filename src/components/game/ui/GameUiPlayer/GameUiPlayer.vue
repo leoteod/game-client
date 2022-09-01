@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-2 left-2">
+  <div class="fixed top-2 left-2 z-10">
     <div
       class="relative avatar rounded-lg overflow-hidden z-10"
       :class="['desktop:w-32 desktop:h-32', 'mobile:w-20 mobile:h-20']"
@@ -54,6 +54,7 @@
     </div>
     <div class="absolute top-12 left-[calc(100%-5px)] pl-2 whitespace-nowrap">
       <span
+        @click="showStatsDropdown = !showStatsDropdown"
         class="text-xs font-border--black text-white bg-black bg-opacity-50 border border-black px-2 py-0.5 rounded"
       >
         Power:
@@ -61,18 +62,75 @@
           class="text-yellow-400 font-border--black"
           v-text="props.character?.stats?.power"
       /></span>
+      <div
+        v-if="showStatsDropdown"
+        class="bg-black bg-opacity-90 border border-black absolute top-[calc(100%+5px)] left-2 text-white px-2 py-1.5 rounded text-xs w-32"
+      >
+        <ul>
+          <template v-for="(statValue, statKey) in props.character?.stats">
+            <li
+              class="flex justify-between items-center"
+              :key="statKey"
+              v-if="statKey !== 'power'"
+            >
+              <span>{{ mapStatName(statKey) }}</span>
+              <span class="text-yellow-500">
+                {{ mapStatValue(statKey, statValue) }}
+              </span>
+            </li>
+          </template>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import { ref } from "vue";
 
 interface Props {
   character: CharacterInterface;
 }
 
 const props = defineProps<Props>();
+
+const showStatsDropdown = ref(false);
+
+function mapStatName(statKey: string) {
+  switch (statKey) {
+    case "hp":
+      return "HP";
+    case "atk":
+      return "Attack";
+    case "def":
+      return "Defense";
+    case "criticalDMG":
+      return "Critical DMG";
+    case "criticalRate":
+      return "Critical Rate";
+    case "blockRate":
+      return "Block Rate";
+    default:
+      return statKey;
+  }
+}
+function mapStatValue(statKey: string, statValue: number) {
+  switch (statKey) {
+    case "hp":
+    case "atk":
+    case "def":
+      return statValue;
+    case "criticalDMG":
+      return `${statValue}%`;
+    case "criticalRate":
+      return `${statValue * 100}%`;
+    case "blockRate":
+      return `${statValue * 100}%`;
+    default:
+      return statValue;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
