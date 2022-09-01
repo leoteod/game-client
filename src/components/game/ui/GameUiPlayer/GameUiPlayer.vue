@@ -40,7 +40,7 @@
       <div
         class="absolute top-0 right-0 bottom-0 left-0 text-center text-xxs flex items-center justify-center text-white font-border--black"
         v-text="
-          `${(props.character?.exp / props.character?.nextLevelExp) * 100}% Exp`
+          `${((props.character?.exp / props.character?.nextLevelExp) * 100).toFixed(2)}% Exp`
         "
       />
     </div>
