@@ -4,8 +4,8 @@
     <div v-if="loading">
       <img
         class="fixed top-0 right-0 bottom-0 left-0 object-fill w-full h-full"
-        src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/66853f18520863.562cad463d0eb.jpg"
-        alt=""
+        src="@/assets/images/town/bg.jpg"
+        alt="Town"
       />
       <game-ui-full-loader />
     </div>

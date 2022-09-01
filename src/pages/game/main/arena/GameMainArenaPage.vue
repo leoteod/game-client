@@ -2,8 +2,8 @@
   <div class="w-full h-full">
     <img
       class="object-fill w-full h-full"
-      src="https://cdnb.artstation.com/p/assets/images/images/032/395/035/large/artforgame-gamedesign-background.jpg?1606313150"
-      alt=""
+      src="@/assets/images/arena/bg.jpg"
+      alt="Arena"
     />
     <game-ui-full-loader v-if="loading" />
     <div

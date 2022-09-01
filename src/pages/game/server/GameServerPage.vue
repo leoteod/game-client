@@ -2,15 +2,11 @@
   <div class="w-screen h-screen">
     <img
       class="fixed top-0 right-0 bottom-0 left-0 object-fill w-full h-full"
-      src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/66853f18520863.562cad463d0eb.jpg"
-      alt=""
+      src="@/assets/images/town/bg.jpg"
+      alt="Town"
     />
-    <div class="relative pt-[3vh]">
-      <img
-        class="w-[40vh] m-auto"
-        src="https://i.pinimg.com/originals/4c/99/c9/4c99c9c8236518c4ed584a297accee09.png"
-        alt=""
-      />
+    <div class="relative">
+      <img class="w-[36vh] m-auto" src="@/assets/images/logo.png" alt="Logo" />
     </div>
     <button
       v-if="server"
@@ -37,10 +33,10 @@
       <game-ui-full-loader />
     </div>
     <div class="relative" v-else-if="!redirect">
-      <div class="mt-[2vh] flex items-center justify-center">
+      <div class="flex items-center justify-center">
         <ul
           v-if="!server"
-          class="h-[55vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
+          class="h-[58vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
         >
           <li
             class="w-[40vw] text-white bg-black bg-opacity-50 p-2 border border-white border-opacity-10 rounded flex gap-2"

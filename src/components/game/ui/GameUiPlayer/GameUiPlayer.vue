@@ -1,12 +1,17 @@
 <template>
   <div class="fixed top-2 left-2">
     <div
-      class="relative avatar bg-black rounded-lg overflow-hidden border-2 border-black z-10"
+      class="relative avatar rounded-lg overflow-hidden z-10"
       :class="['desktop:w-32 desktop:h-32', 'mobile:w-20 mobile:h-20']"
     >
       <img
         class="w-full h-full block"
-        src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1341200/6c7da42b5fccb071fbaa8e3ec757ee13938e83e9.jpg"
+        src="/images/avatar/bg.png"
+        alt="Avatar BG"
+      />
+      <img
+        class="absolute top-0 right-0 bottom-0 left-0 w-full h-full block"
+        :src="`/images/avatar/${props.character?.avatar || 0}.png`"
         alt="Avatar"
       />
       <div
@@ -19,7 +24,7 @@
       />
     </div>
     <div
-      class="absolute top-0 left-[calc(100%-5px)] pl-[5px] bg-black bg-opacity-50 border border-black h-8 rounded-tr-lg"
+      class="absolute top-0 left-[calc(100%-7px)] pl-[7px] bg-black bg-opacity-50 border border-black h-8 rounded-tr-lg"
     >
       <span
         class="pl-2 pr-4 whitespace-nowrap text-green-400 text-xs font-border--black"
@@ -27,7 +32,7 @@
       />
     </div>
     <div
-      class="absolute left-[calc(100%-5px)] bg-black top-7 pl-[5px] w-48 h-5 border border-black rounded-tr-md rounded-br-md"
+      class="absolute left-[calc(100%-7px)] bg-black top-7 pl-[5px] w-48 h-5 border border-black rounded-tr-md rounded-br-md"
     >
       <div
         class="absolute top-0 left-0 bottom-0 bg-blue-600"
@@ -40,7 +45,10 @@
       <div
         class="absolute top-0 right-0 bottom-0 left-0 text-center text-xxs flex items-center justify-center text-white font-border--black"
         v-text="
-          `${((props.character?.exp / props.character?.nextLevelExp) * 100).toFixed(2)}% Exp`
+          `${(
+            (props.character?.exp / props.character?.nextLevelExp) *
+            100
+          ).toFixed(2)}% Exp`
         "
       />
     </div>
