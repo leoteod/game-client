@@ -20,11 +20,11 @@ import { BattlesController } from "@/api/Controllers/Http/Battle/BattlesControll
 const character = reactive({
   data: {},
 });
-const { index, loading } = CharactersController();
+const { scopedIndex, loading } = CharactersController();
 const { results } = BattlesController();
 
 async function onGetCharacter() {
-  const response = await index();
+  const response = await scopedIndex();
   if (response.success) {
     character.data = response.data;
   }

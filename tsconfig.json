@@ -1,4 +1,13 @@
 {
+
+  "compilerOptions": {
+    "types": [
+      "vite-plugin-pwa/client"
+    ],
+  },
+  "exclude": [
+    "**/*.worker.ts"
+  ],
   "files": [],
   "references": [
     {

@@ -118,7 +118,7 @@ import type { ServerInterface } from "@/api/Interfaces/Server/ServerInterface";
 import type { AccountInterface } from "@/api/Interfaces/Account/AccountInterface";
 import { EnumAccountProps } from "@/api/Enums/Account/AccountProps";
 import { CharactersController } from "@/api/Controllers/Http/Character/CharactersController";
-import { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import router from "@/router";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
 

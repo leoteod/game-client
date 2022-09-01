@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import { ref } from "vue";
 
 interface Props {

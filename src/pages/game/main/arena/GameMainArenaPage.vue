@@ -43,7 +43,7 @@ import { onMounted, reactive } from "vue";
 import { ArenaController } from "@/api/Controllers/Http/Arena/ArenaController";
 import type { ArenaInterface } from "@/api/Interfaces/Arena/ArenaInterface";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
-import { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 
 interface Props {
   character: CharacterInterface;
