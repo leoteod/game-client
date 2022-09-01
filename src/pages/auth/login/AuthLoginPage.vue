@@ -48,8 +48,7 @@ async function onLogin() {
   const { login } = AccountsController();
   const response = await login(form);
   if (response.success) {
-    console.log("response", response.success);
-    await router.push("/about");
+    await router.push("/game/server");
   }
 }
 </script>
