@@ -69,7 +69,7 @@
         class="border border-black bg-black bg-opacity-75 px-4 h-10 flex gap-2 text-sm items-center justify-center text-white rounded-lg"
         type="button"
       >
-        <span>Battle</span>
+        <span class="font-bold text-yellow-500">Battle</span>
         <img
           class="block w-4 h-4"
           src="@/assets/images/svg/swords.svg"
