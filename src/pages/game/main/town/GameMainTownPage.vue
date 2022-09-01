@@ -1,6 +1,7 @@
 <template>
   <div class="w-full h-full">
     <game-ui-player :character="props.character" />
+    <game-ui-resources />
     <img
       class="object-fill w-full h-full"
       src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/66853f18520863.562cad463d0eb.jpg"
@@ -139,6 +140,7 @@
 <script setup lang="ts">
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
+import GameUiResources from "@/components/game/ui/GameUiResources/GameUiResources.vue";
 
 interface Props {
   character: CharacterInterface;
