@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Method, AxiosRequestHeaders } from "axios";
 import { ref } from "vue";
 import router from "@/router";
-axios.defaults.baseURL = "http://0.0.0.0:3333";
+axios.defaults.baseURL = "http://192.168.178.43:3333";
 axios.defaults.baseURL += "/api";
 
 axios.interceptors.response.use(

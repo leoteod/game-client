@@ -6,6 +6,9 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    host: "0.0.0.0",
+  },
   plugins: [
     vue(),
     VitePWA({
@@ -21,7 +24,7 @@ export default defineConfig({
       manifest: {
         name: "Test Project",
         short_name: "Test",
-        description: 'Game',
+        description: "Game",
         theme_color: "#ffffff",
         start_url: "/game/server",
         display: "standalone",
