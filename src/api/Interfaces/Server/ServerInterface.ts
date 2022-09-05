@@ -5,4 +5,5 @@ export interface ServerInterface {
   [EnumServerProps.name]: string;
   [EnumServerProps.capacity]: number;
   [EnumServerProps.maintenance]: boolean;
+  [EnumServerProps.hasCharacter]?: boolean;
 }
