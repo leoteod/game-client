@@ -27,7 +27,7 @@
                 : onBattle(arena.character.id)
             "
           >
-            <span v-text="`Rank: ${arena.rank}`" />
+            <span v-text="`Rank: ${arena.rank || 'Unranked'}`" />
             <span
               v-text="`[${arena.character.level}] ${arena.character.name}`"
             />
