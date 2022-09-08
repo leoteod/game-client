@@ -9,7 +9,7 @@
         alt="Energy"
       />
       <div class="font-border--black text-xs">
-        {{ resource.data?.energy || 0 }} / 300
+        {{ resource.data?.energy || 0 }} / 500
       </div>
     </div>
     <div

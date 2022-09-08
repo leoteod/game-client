@@ -87,6 +87,7 @@
 
 <script setup lang="ts">
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import { EnumEquipmentItemProps } from "@/api/Enums/Equipment/EquipmentProps";
 import { ref } from "vue";
 
 interface Props {
@@ -99,17 +100,17 @@ const showStatsDropdown = ref(false);
 
 function mapStatName(statKey: string) {
   switch (statKey) {
-    case "hp":
+    case EnumEquipmentItemProps.hp:
       return "HP";
-    case "atk":
+    case EnumEquipmentItemProps.atk:
       return "Attack";
-    case "def":
+    case EnumEquipmentItemProps.def:
       return "Defense";
-    case "criticalDMG":
+    case EnumEquipmentItemProps.criticalDMG:
       return "Critical DMG";
-    case "criticalRate":
+    case EnumEquipmentItemProps.criticalRate:
       return "Critical Rate";
-    case "blockRate":
+    case EnumEquipmentItemProps.blockRate:
       return "Block Rate";
     default:
       return statKey;
@@ -117,15 +118,15 @@ function mapStatName(statKey: string) {
 }
 function mapStatValue(statKey: string, statValue: number) {
   switch (statKey) {
-    case "hp":
-    case "atk":
-    case "def":
+    case EnumEquipmentItemProps.hp:
+    case EnumEquipmentItemProps.atk:
+    case EnumEquipmentItemProps.def:
       return statValue;
-    case "criticalDMG":
+    case EnumEquipmentItemProps.criticalDMG:
       return `${statValue}%`;
-    case "criticalRate":
+    case EnumEquipmentItemProps.criticalRate:
       return `${statValue * 100}%`;
-    case "blockRate":
+    case EnumEquipmentItemProps.blockRate:
       return `${statValue * 100}%`;
     default:
       return statValue;

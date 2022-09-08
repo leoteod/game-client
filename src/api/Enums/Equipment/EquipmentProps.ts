@@ -12,14 +12,14 @@ export enum EnumEquipmentItemProps {
   hp = "hp",
   atk = "atk",
   def = "def",
-  criticalDMG = "criticalDMG",
-  criticalRate = "criticalRate",
-  blockRate = "blockRate",
+  criticalDMG = "critical_dmg",
+  criticalRate = "critical_rate",
+  blockRate = "block_rate",
   power = "power",
   // Automatically generated readonly props
   level = "level",
   // Visual only for battle generation
-  _currentHP = "currentHP",
+  _currentHP = "current_hp",
 }
 
 export enum EnumEquipmentPowerMultiplierProps {
