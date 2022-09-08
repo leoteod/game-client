@@ -41,10 +41,9 @@
 import type { ResourceInterface } from "@/api/Interfaces/Resource/ResourceInterface";
 import { onMounted, reactive } from "vue";
 import { ResourcesController } from "@/api/Controllers/Http/Resource/ResourcesController";
+import { useFormat } from "@/composables/useFormat";
 
-function numberWithCommas(value: number) {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+const { numberWithCommas } = useFormat();
 
 const { scopedIndex } = ResourcesController();
 

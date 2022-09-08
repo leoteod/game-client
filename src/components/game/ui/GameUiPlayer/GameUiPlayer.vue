@@ -60,7 +60,7 @@
         Power:
         <span
           class="text-yellow-400 font-border--black"
-          v-text="props.character?.stats?.power"
+          v-text="numberWithCommas(props.character?.stats?.power)"
       /></span>
       <div
         v-if="showStatsDropdown"
@@ -89,12 +89,15 @@
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import { EnumEquipmentItemProps } from "@/api/Enums/Equipment/EquipmentProps";
 import { ref } from "vue";
+import { useFormat } from "@/composables/useFormat";
 
 interface Props {
   character: CharacterInterface;
 }
 
 const props = defineProps<Props>();
+
+const { numberWithCommas } = useFormat();
 
 const showStatsDropdown = ref(false);
 
@@ -121,7 +124,7 @@ function mapStatValue(statKey: string, statValue: number) {
     case EnumEquipmentItemProps.hp:
     case EnumEquipmentItemProps.atk:
     case EnumEquipmentItemProps.def:
-      return statValue;
+      return numberWithCommas(statValue);
     case EnumEquipmentItemProps.criticalDMG:
       return `${statValue}%`;
     case EnumEquipmentItemProps.criticalRate:
