@@ -1,4 +1,11 @@
 import { useHttp } from "@/composables/useHttp";
+import { EnumCharacterProps } from "@/api/Enums/Character/CharacterProps";
+
+export interface PublicCreateFormInterface {
+  [EnumCharacterProps.server_id]: number;
+  [EnumCharacterProps.name]: string;
+  [EnumCharacterProps.avatar]: number;
+}
 
 export function CharactersController() {
   const { fetch, loading } = useHttp();
@@ -37,5 +44,24 @@ export function CharactersController() {
       };
     }
   }
-  return { scopedCharactersOnServer, scopedIndex, loading };
+
+  async function publicCreate(form: PublicCreateFormInterface) {
+    const response = await fetch({
+      method: "post",
+      url: `public/${url}`,
+      data: form,
+      delay: 1000,
+    });
+    if (!response.error) {
+      return {
+        success: true,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  }
+  return { scopedCharactersOnServer, scopedIndex, publicCreate, loading };
 }

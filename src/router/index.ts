@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import AuthLoginPage from "../pages/auth/login/AuthLoginPage.vue";
+import AuthRegisterPage from "../pages/auth/register/AuthRegisterPage.vue";
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: AuthLoginPage,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: AuthRegisterPage,
   },
   {
     path: "/about",
@@ -73,7 +79,11 @@ function returnRoutePath(name: string) {
 }
 
 router.beforeEach((to, from, next) => {
-  const publicPages = [returnRoutePath("homepage"), returnRoutePath("login")];
+  const publicPages = [
+    returnRoutePath("homepage"),
+    returnRoutePath("login"),
+    returnRoutePath("register"),
+  ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("token");
   // trying to access a restricted page + not logged in

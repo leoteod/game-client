@@ -172,7 +172,7 @@
           </div>
         </div>
         <ul
-          class="h-[55vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
+          class="h-[55vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2 hidden"
           v-else
         >
           <template v-if="characters.data.length">
@@ -212,7 +212,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, nextTick } from "vue";
 import { ServersController } from "@/api/Controllers/Http/Server/ServersController";
 import type { ServerInterface } from "@/api/Interfaces/Server/ServerInterface";
 import type { AccountInterface } from "@/api/Interfaces/Account/AccountInterface";
@@ -238,8 +238,11 @@ async function onGetServers() {
   }
 }
 
-const { scopedCharactersOnServer, loading: charactersLoading } =
-  CharactersController();
+const {
+  scopedCharactersOnServer,
+  loading: charactersLoading,
+  publicCreate,
+} = CharactersController();
 const server = ref(0);
 const characters = reactive<{ data: CharacterInterface[] | [] }>({
   data: [],
@@ -249,6 +252,15 @@ async function onSelectServer(serverId: number) {
   const response = await scopedCharactersOnServer(server.value);
   if (response.success) {
     characters.data = response.data as CharacterInterface[];
+    if (characters.data.length) {
+      // Since we have only one character/server now automatically select character and redirect to server
+      await nextTick(async () => {
+        await onSelectCharacter(characters.data[0].id);
+      });
+    } else {
+      // Automatically redirect to create character screen until we support more character classes
+      create.value = true;
+    }
   }
 }
 
@@ -281,10 +293,19 @@ function onSelectAvatar(avatar_id: number) {
 }
 
 const nickname = ref("");
-function onCreateCharacter() {
+async function onCreateCharacter() {
   if (!nickname.value.length) {
     return;
   }
-  console.log("nickname", nickname.value);
+
+  const response = await publicCreate({
+    server_id: server.value,
+    avatar: avatar.value,
+    name: nickname.value,
+  });
+  if (response.success) {
+    const responseData = response.data as CharacterInterface;
+    await onSelectCharacter(responseData.id);
+  }
 }
 </script>

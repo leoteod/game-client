@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-100 h-screen w-screen">
     <div class="flex items-center justify-center h-full">
-      <form @submit.prevent="onLogin" class="bg-gray-200 p-10">
+      <form @submit.prevent="onRegister" class="bg-gray-200 p-10">
         <div class="mb-4">
           <label class="block mb-1 text-sm font-semibold" for="email"
             >Email</label
@@ -26,13 +26,8 @@
         </div>
         <div>
           <button class="bg-gray-900 text-white w-full py-2" type="submit">
-            Login
+            Register
           </button>
-          <div class="text-center mt-2">
-            <router-link class="text-center" :to="{ name: 'register' }"
-              >Or register</router-link
-            >
-          </div>
         </div>
       </form>
     </div>
@@ -47,13 +42,15 @@ import { AccountsController } from "@/api/Controllers/Http/Account/AccountsContr
 const form = reactive({
   email: "nemanja.dragun@gmail.com",
   password: "12345678",
+  password_confirmation: "",
 });
 
-async function onLogin() {
-  const { login } = AccountsController();
-  const response = await login(form);
+async function onRegister() {
+  const { register } = AccountsController();
+  form.password_confirmation = form.password;
+  const response = await register(form);
   if (response.success) {
-    await router.push("/game/server");
+    await router.push("/login");
   }
 }
 </script>
