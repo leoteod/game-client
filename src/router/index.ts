@@ -55,6 +55,14 @@ const routes = [
                   import("../pages/game/main/town/GameMainTownPage.vue"),
               },
               {
+                path: "campaign",
+                name: "campaign",
+                component: () =>
+                  import(
+                    "../pages/game/main/campaign/GameMainCampaignPage.vue"
+                  ),
+              },
+              {
                 path: "arena",
                 name: "arena",
                 component: () =>

@@ -8,9 +8,10 @@
         src="@/assets/images/svg/energy.svg"
         alt="Energy"
       />
-      <div class="font-border--black text-xs">
-        {{ resource.data?.energy || 0 }} / 500
-      </div>
+      <div
+        class="font-border--black text-xs"
+        v-text="`${resource.data?.energy || 0} / 500`"
+      />
     </div>
     <div
       class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"

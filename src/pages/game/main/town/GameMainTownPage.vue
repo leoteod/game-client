@@ -86,6 +86,7 @@
       <div
         data-area="campaign"
         class="absolute top-[23%] left-[23%] w-[13%] h-[22%] pt-2 flex items-start justify-center"
+        @click="$router.push({ name: 'campaign' })"
       >
         <div
           class="bg-black text-white py-1 px-4 rounded border border-black bg-opacity-50 text-sm"
