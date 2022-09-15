@@ -107,6 +107,7 @@
         </div>
       </div>
       <div
+        v-if="character.level < 10"
         data-area="battleArenaLocked"
         class="absolute text-white top-[52%] left-[17%] w-[43%] h-[35%] flex items-center justify-center text-center"
       >
@@ -145,6 +146,7 @@
         </div>
       </div>
       <div
+        v-if="character.level < 15"
         data-area="skillTreeLocked"
         class="absolute text-white top-[51%] left-[1%] w-[16%] h-[15%] flex items-center justify-center text-center"
       >
@@ -183,6 +185,7 @@
         </div>
       </div>
       <div
+        v-if="character.level < 20"
         data-area="dungeonLocked"
         class="absolute text-white top-[51%] right-[6%] w-[22%] h-[24%] flex items-center justify-center text-center"
       >

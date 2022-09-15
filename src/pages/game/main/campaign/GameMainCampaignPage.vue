@@ -11,66 +11,77 @@
       v-else
     >
       <div class="flex items-center flex-col gap-4">
-        <div class="text-center">
-          <h1
-            class="text-lg font-border--black font-bold text-yellow-500 uppercase"
-            v-text="`Mode: ${returnCurrentStageData?.campaign?.tier}`"
-          />
-          <div
-            v-if="returnNextStageData"
-            class="text-sm font-bold text-red-500 uppercase"
-            v-text="
-              `Next Stage Recommended Power: ${numberWithCommas(
-                returnNextStageData
-                  ? returnNextStageData?.monster?.stats?.power || 0
-                  : returnCurrentStageData.campaign?.power
-              )}`
-            "
-          />
-          <div
-            class="text-sm font-bold text-orange-500 uppercase"
-            v-text="'Finished all stages. Congrats!'"
-            v-else
-          />
-        </div>
-        <div class="flex items-center gap-4">
-          <div
-            class="relative bg-black text-white w-20 h-20 flex items-center justify-center rounded-lg border border-black border-opacity-25 opacity-50"
-            :class="{
-              'opacity-100': campaign.id >= returnCurrentStageData?.campaign_id,
-              'border-green-400 border-opacity-100 border-2 bg-green-900 animate-bounce':
-                campaign.id === returnCurrentStageData?.campaign_id,
-            }"
-            v-for="(campaign, campaignIndex) in returnCampaigns"
-            :key="campaign.id"
-          >
-            <div class="flex flex-col gap-2 items-center">
-              <div class="text-xs">Stage {{ campaignIndex + 1 }}</div>
-              <div
-                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
-              >
-                <img
-                  class="block w- h-4"
-                  src="@/assets/images/svg/energy.svg"
-                  alt="Energy"
-                />
+        <template v-if="campaignProgress.data">
+          <div class="text-center">
+            <h1
+              class="text-lg font-border--black font-bold text-yellow-500 uppercase"
+              v-text="`Mode: ${returnCurrentStageData?.campaign?.tier}`"
+            />
+            <div
+              v-if="returnNextStageData"
+              class="text-sm font-bold text-red-500 uppercase"
+              v-text="
+                `Next Stage Recommended Power: ${numberWithCommas(
+                  returnNextStageData
+                    ? returnNextStageData?.monster?.stats?.power || 0
+                    : returnCurrentStageData.campaign?.power
+                )}`
+              "
+            />
+            <div
+              class="text-sm font-bold text-orange-500 uppercase"
+              v-text="'Finished all stages. Congrats!'"
+              v-else
+            />
+          </div>
+          <div class="flex items-center gap-4">
+            <div
+              class="relative bg-black text-white w-20 h-20 flex items-center justify-center rounded-lg border border-black border-opacity-25 opacity-50"
+              :class="{
+                'opacity-100':
+                  campaign.id >= returnCurrentStageData?.campaign_id,
+                'border-green-400 border-opacity-100 border-2 bg-green-900 animate-bounce':
+                  campaign.id === returnCurrentStageData?.campaign_id,
+              }"
+              v-for="(campaign, campaignIndex) in returnCampaigns"
+              :key="campaign.id"
+            >
+              <div class="flex flex-col gap-2 items-center">
+                <div class="text-xs">Stage {{ campaignIndex + 1 }}</div>
                 <div
-                  class="font-border--black text-xs"
-                  v-text="`${numberWithCommas(campaign.required_energy)}`"
-                />
+                  class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+                >
+                  <img
+                    class="block w- h-4"
+                    src="@/assets/images/svg/energy.svg"
+                    alt="Energy"
+                  />
+                  <div
+                    class="font-border--black text-xs"
+                    v-text="`${numberWithCommas(campaign.required_energy)}`"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </template>
         <div class="flex items-center gap-4">
           <div v-if="!campaignProgress.data">
-            <button
-              class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
-              type="button"
-              @click="onBattleNextStage()"
-            >
-              Start Campaign
-            </button>
+            <div class="relative">
+              <button
+                class="pointer-events-none absolute top-0 right-0 bottom-0 left-0 bg-green-700 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold animate-ping"
+                type="button"
+              >
+                Start Campaign
+              </button>
+              <button
+                class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
+                type="button"
+                @click="onBattleNextStage()"
+              >
+                Start Campaign
+              </button>
+            </div>
           </div>
           <template v-else>
             <div>
@@ -95,6 +106,7 @@
           </template>
         </div>
         <div
+          v-if="campaignProgress.data"
           :class="{
             'animate-pulse': returnNextStageData && ableToShowNextInfo,
           }"
@@ -240,18 +252,11 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
-import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import { useFormat } from "@/composables/useFormat";
 import { CampaignProgressController } from "@/api/Controllers/Http/CampaignProgress/CampaignProgressController";
 import type { CampaignProgressInterface } from "@/api/Interfaces/CampaignProgress/CampaignProgressInterface";
 import { CampaignController } from "@/api/Controllers/Http/Campaign/CampaignController";
 import type { CampaignInterface } from "@/api/Interfaces/Campaign/CampaignInterface";
-
-interface Props {
-  character: CharacterInterface;
-}
-
-const props = defineProps<Props>();
 
 const { numberWithCommas } = useFormat();
 
