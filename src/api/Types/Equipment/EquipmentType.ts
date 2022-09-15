@@ -4,5 +4,3 @@ export type TypeEquipmentTier =
   | "rare"
   | "epic"
   | "legendary";
-
-export type TypeEquipmentType = "head" | "suit" | "boots" | "gloves";

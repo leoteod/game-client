@@ -3,10 +3,10 @@ import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInt
 import type { ServerInterface } from "@/api/Interfaces/Server/ServerInterface";
 
 export interface ArenaInterface {
-  id: number;
+  [EnumArenaProps.id]?: number;
   [EnumArenaProps.rank]: number;
   [EnumArenaProps.character_id]: number | null;
   [EnumArenaProps.server_id]: number | null;
-  character: CharacterInterface;
+  character?: CharacterInterface | null;
   server?: ServerInterface | null;
 }

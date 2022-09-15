@@ -1,7 +1,7 @@
 import { EnumResourceProps } from "@/api/Enums/Resource/ResourceProps";
 
 export interface ResourceInterface {
-  id: number;
+  [EnumResourceProps.id]?: number;
   [EnumResourceProps.gold]: number;
   [EnumResourceProps.diamonds]: number;
   [EnumResourceProps.arena_coins]: number;

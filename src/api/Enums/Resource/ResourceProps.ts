@@ -1,4 +1,5 @@
 export enum EnumResourceProps {
+  id = "id",
   gold = "gold",
   diamonds = "diamonds",
   arena_coins = "arena_coins",

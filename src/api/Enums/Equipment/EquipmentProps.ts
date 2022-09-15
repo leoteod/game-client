@@ -1,12 +1,30 @@
 export enum EnumEquipmentProps {
+  id = "id",
   character_id = "character_id",
+  boots_id = "boots_id",
+  boots_options = "boots_options",
+  earring_left_id = "earring_left_id",
+  earring_left_options = "earring_left_options",
+  earring_right_id = "earring_right_id",
+  earring_right_options = "earring_right_options",
+  gloves_id = "gloves_id",
+  gloves_options = "gloves_options",
   head_id = "head_id",
   head_options = "head_options",
+  ring_left_id = "ring_left_id",
+  ring_left_options = "ring_left_options",
+  ring_right_id = "ring_right_id",
+  ring_right_options = "ring_right_options",
+  shield_id = "shield_id",
+  shield_options = "shield_options",
   suit_id = "suit_id",
   suit_options = "suit_options",
+  weapon_id = "weapon_id",
+  weapon_options = "weapon_options",
 }
 
 export enum EnumEquipmentItemProps {
+  id = "id",
   type = "type",
   tier = "tier",
   hp = "hp",
@@ -49,8 +67,14 @@ export enum EnumEquipmentTier {
 }
 
 export enum EnumEquipmentType {
-  head = "head",
-  suit = "suit",
   boots = "boots",
+  earring_left = "earring_left",
+  earring_right = "earring_right",
   gloves = "gloves",
+  head = "head",
+  ring_left = "ring_left",
+  ring_right = "ring_right",
+  shield = "shield",
+  suit = "suit",
+  weapon = "weapon",
 }

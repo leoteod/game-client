@@ -1,4 +1,5 @@
 export enum EnumCharacterProps {
+  id = "id",
   name = "name",
   class = "class",
   avatar = "avatar",
