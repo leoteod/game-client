@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen h-screen">
     <game-ui-init-loader v-if="initialLoading" />
-    <div v-if="loading">
+    <div v-show="loading">
       <img
         class="fixed top-0 right-0 bottom-0 left-0 object-fill w-full h-full"
         src="@/assets/images/town/bg.jpg"
@@ -9,7 +9,7 @@
       />
       <game-ui-full-loader />
     </div>
-    <div class="w-full h-full" v-else>
+    <div class="w-full h-full" v-show="!loading">
       <game-ui-player :character="character.data" />
       <button
         v-if="!path.includes('/main/town')"

@@ -5,7 +5,7 @@
       src="@/assets/images/campaign/bg.jpg"
       alt="Arena"
     />
-    <game-ui-full-loader v-if="loading" />
+    <game-ui-full-loader v-if="isLoading" />
     <div
       class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center"
       v-else
@@ -14,24 +14,38 @@
         <div class="text-center">
           <h1
             class="text-lg font-border--black font-bold text-yellow-500 uppercase"
-            v-text="'Mode: Easy'"
+            v-text="`Mode: ${returnCurrentStageData?.campaign?.tier}`"
           />
           <div
+            v-if="returnNextStageData"
             class="text-sm font-bold text-red-500 uppercase"
-            v-text="`Recommended Power: ${numberWithCommas(10000)}`"
+            v-text="
+              `Next Stage Recommended Power: ${numberWithCommas(
+                returnNextStageData
+                  ? returnNextStageData?.monster?.stats?.power || 0
+                  : returnCurrentStageData.campaign?.power
+              )}`
+            "
+          />
+          <div
+            class="text-sm font-bold text-orange-500 uppercase"
+            v-text="'Finished all stages. Congrats!'"
+            v-else
           />
         </div>
         <div class="flex items-center gap-4">
           <div
             class="relative bg-black text-white w-20 h-20 flex items-center justify-center rounded-lg border border-black border-opacity-25 opacity-50"
             :class="{
-              'opacity-100': n === 1,
+              'opacity-100': campaign.id >= returnCurrentStageData?.campaign_id,
+              'border-green-400 border-opacity-100 border-2 bg-green-900 animate-bounce':
+                campaign.id === returnCurrentStageData?.campaign_id,
             }"
-            v-for="n in 7"
-            :key="n"
+            v-for="(campaign, campaignIndex) in returnCampaigns"
+            :key="campaign.id"
           >
             <div class="flex flex-col gap-2 items-center">
-              <div class="text-xs">Stage {{ n }}</div>
+              <div class="text-xs">Stage {{ campaignIndex + 1 }}</div>
               <div
                 class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
               >
@@ -42,17 +56,18 @@
                 />
                 <div
                   class="font-border--black text-xs"
-                  v-text="`${numberWithCommas(10)}`"
+                  v-text="`${numberWithCommas(campaign.required_energy)}`"
                 />
               </div>
             </div>
           </div>
         </div>
         <div class="flex items-center gap-4">
-          <div v-if="true">
+          <div v-if="!campaignProgress.data">
             <button
               class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
               type="button"
+              @click="onBattleNextStage()"
             >
               Start Campaign
             </button>
@@ -66,72 +81,154 @@
                 Battle current stage
               </button>
             </div>
-            <div>
+            <div
+              v-if="returnNextStageData ? returnNextStageData.id < 35 : false"
+            >
               <button
-                class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
+                class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold animate-pulse"
                 type="button"
+                @click="onBattleNextStage()"
               >
                 Go to next stage
               </button>
             </div>
           </template>
         </div>
-        <div>
+        <div
+          :class="{
+            'animate-pulse': returnNextStageData && ableToShowNextInfo,
+          }"
+        >
           <h2
             class="text-center font-border--black text-lg mb-2 text-green-400"
-            v-text="'Stage Rewards'"
+            :class="{ 'text-yellow-300': ableToShowNextInfo }"
+            v-text="`${ableToShowNextInfo ? 'Next' : 'Current'} Stage Rewards`"
           />
-          <div class="flex gap-4 whitespace-nowrap">
-            <div
-              class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
-            >
-              <span
-                class="text-xs font-border--black font-bold text-blue-500"
-                v-text="'EXP'"
-              />
+          <div class="flex flex-col gap-2 items-center">
+            <div class="flex gap-4 whitespace-nowrap">
               <div
-                class="font-border--black text-xs"
-                v-text="`${numberWithCommas(500)} ~ ${numberWithCommas(1000)}`"
-              />
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <span
+                  class="text-xs font-border--black font-bold text-blue-500"
+                  v-text="'EXP'"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="
+                    `${numberWithCommas(
+                      returnRewardsInfo?.minExp
+                    )} ~ ${numberWithCommas(returnRewardsInfo?.maxExp)}`
+                  "
+                />
+              </div>
+              <div
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="@/assets/images/svg/gold.svg"
+                  alt="Gold"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="
+                    `${numberWithCommas(
+                      returnRewardsInfo?.minGold
+                    )} ~ ${numberWithCommas(returnRewardsInfo?.maxGold)}`
+                  "
+                />
+              </div>
+              <div
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="@/assets/images/svg/diamond.svg"
+                  alt="Diamonds"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="
+                    `${numberWithCommas(
+                      returnRewardsInfo?.minDiamonds
+                    )} ~ ${numberWithCommas(returnRewardsInfo?.maxDiamonds)}`
+                  "
+                />
+              </div>
             </div>
-            <div
-              class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
-            >
-              <img
-                class="block w- h-4"
-                src="@/assets/images/svg/gold.svg"
-                alt="Gold"
-              />
+            <div class="flex gap-4 whitespace-nowrap">
               <div
-                class="font-border--black text-xs"
-                v-text="`${numberWithCommas(1000)} ~ ${numberWithCommas(5000)}`"
-              />
-            </div>
-            <div
-              class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
-            >
-              <img
-                class="block w- h-4"
-                src="@/assets/images/svg/diamond.svg"
-                alt="Diamonds"
-              />
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="/images/equipment/craft/starter_stone.png"
+                  alt="Craft Starter Material"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="
+                    `${numberWithCommas(returnRewardsInfo?.starter_stone)}`
+                  "
+                />
+              </div>
               <div
-                class="font-border--black text-xs"
-                v-text="`${numberWithCommas(1)} ~ ${numberWithCommas(10)}`"
-              />
-            </div>
-            <div
-              class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
-            >
-              <img
-                class="block w- h-4"
-                src="/images/equipment/craft/1.png"
-                alt="Craft Starter Material"
-              />
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="/images/equipment/craft/common_stone.png"
+                  alt="Craft Common Material"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="
+                    `${numberWithCommas(returnRewardsInfo?.common_stone)}`
+                  "
+                />
+              </div>
               <div
-                class="font-border--black text-xs"
-                v-text="`${numberWithCommas(1)}`"
-              />
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="/images/equipment/craft/rare_stone.png"
+                  alt="Craft Rare Material"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="`${numberWithCommas(returnRewardsInfo?.rare_stone)}`"
+                />
+              </div>
+              <div
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="/images/equipment/craft/epic_stone.png"
+                  alt="Craft Epic Material"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="`${numberWithCommas(returnRewardsInfo?.epic_stone)}`"
+                />
+              </div>
+              <div
+                class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+              >
+                <img
+                  class="block w- h-4"
+                  src="/images/equipment/craft/legendary_stone.png"
+                  alt="Craft Legendary Material"
+                />
+                <div
+                  class="font-border--black text-xs"
+                  v-text="
+                    `${numberWithCommas(returnRewardsInfo?.legendary_stone)}`
+                  "
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -141,12 +238,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from "vue";
-import { ArenaController } from "@/api/Controllers/Http/Arena/ArenaController";
-import type { ArenaInterface } from "@/api/Interfaces/Arena/ArenaInterface";
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import { useFormat } from "@/composables/useFormat";
+import { CampaignProgressController } from "@/api/Controllers/Http/CampaignProgress/CampaignProgressController";
+import type { CampaignProgressInterface } from "@/api/Interfaces/CampaignProgress/CampaignProgressInterface";
+import { CampaignController } from "@/api/Controllers/Http/Campaign/CampaignController";
+import type { CampaignInterface } from "@/api/Interfaces/Campaign/CampaignInterface";
 
 interface Props {
   character: CharacterInterface;
@@ -156,30 +255,96 @@ const props = defineProps<Props>();
 
 const { numberWithCommas } = useFormat();
 
-const arenaCharacters = reactive<{ data: ArenaInterface[] | [] }>({
-  data: [],
+const showNextInfo = ref(false);
+const showNextInfoInterval = ref(0);
+
+const ableToShowNextInfo = computed(() => {
+  return returnNextStageData.value && showNextInfo.value;
 });
-const { publicIndex, loading, scopedCombat } = ArenaController();
 
 onMounted(async () => {
-  await onGetArenaCharacter();
+  await onGetCampaigns();
+  await onGetCampaignProgress();
+  showNextInfoInterval.value = setInterval(() => {
+    showNextInfo.value = !showNextInfo.value;
+  }, 5000);
 });
 
-async function onGetArenaCharacter() {
-  const response = await publicIndex();
+onBeforeUnmount(() => {
+  clearInterval(showNextInfoInterval.value);
+});
+
+const { scopedIndex: getCampaigns, loading: campaignLoading } =
+  CampaignController();
+const campaigns = reactive<{ data: CampaignInterface[] | [] }>({
+  data: [],
+});
+async function onGetCampaigns() {
+  const response = await getCampaigns();
   if (response.success) {
-    arenaCharacters.data = response.data as ArenaInterface[];
+    campaigns.data = response.data as CampaignInterface[];
   }
 }
 
-async function onBattle(defenderId: number) {
-  const response = await scopedCombat(defenderId);
-  if (response.success) {
-    if (response.data.results.winner_id === props.character.id) {
-      await onGetArenaCharacter();
-    } else {
-      alert("lost");
+const returnCampaigns = computed(() => {
+  const currentStageId = returnCurrentStageData.value?.campaign_id || 1;
+  const findCampaignTier = campaigns.data.find(
+    (obj) => obj.id === currentStageId
+  );
+  return campaigns.data.filter((obj) => obj.tier === findCampaignTier!.tier);
+});
+
+const returnCurrentStageData = computed(() => {
+  return (
+    campaignProgress.data || {
+      campaign_id: campaigns.data[0]?.id,
+      campaign: campaigns.data[0],
     }
+  );
+});
+
+const returnNextStageData = computed(() => {
+  let currentStageId = returnCurrentStageData.value?.campaign_id || 1;
+  if (currentStageId > campaigns.data.length) {
+    currentStageId = campaigns.data.length;
+  }
+  return campaigns.data.find((obj) => obj.id === currentStageId + 1);
+});
+
+const returnRewardsInfo = computed(() => {
+  if (ableToShowNextInfo.value) {
+    return returnNextStageData.value?.rewards;
+  } else {
+    return returnCurrentStageData.value?.campaign?.rewards;
+  }
+});
+
+const {
+  scopedIndex: getProgress,
+  next: onNextStage,
+  loading: progressLoading,
+} = CampaignProgressController();
+const campaignProgress = reactive<{ data: CampaignProgressInterface | null }>({
+  data: null,
+});
+async function onGetCampaignProgress() {
+  const response = await getProgress();
+  if (response.success) {
+    campaignProgress.data = response.data as CampaignProgressInterface;
+  }
+}
+
+const isLoading = computed(() => {
+  return progressLoading.value || campaignLoading.value;
+});
+
+async function onBattleNextStage() {
+  const response = await onNextStage();
+  if (response.success) {
+    console.log("WON");
+    await onGetCampaignProgress();
+  } else {
+    console.log("lost");
   }
 }
 </script>
