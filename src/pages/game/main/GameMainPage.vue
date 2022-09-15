@@ -39,13 +39,16 @@
 
 <script setup lang="ts">
 import { CharactersController } from "@/api/Controllers/Http/Character/CharactersController";
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
 import router from "@/router";
 import GameUiInitLoader from "@/components/game/ui/GameUiInitLoader/GameUiInitLoader.vue";
+import eventBus from "@/events/eventBus";
+import {EnumEvents} from "@/events/events";
+
 const character = reactive<{ data: CharacterInterface | object }>({
   data: {},
 });
@@ -61,6 +64,11 @@ onMounted(async () => {
     await onGetCharacter();
   }
   initialLoading.value = false;
+  eventBus.$on(EnumEvents.reloadCharacter, async () => await onGetCharacter());
+});
+
+onBeforeUnmount(async () => {
+  eventBus.$off(EnumEvents.reloadCharacter, async () => await onGetCharacter());
 });
 
 async function onGetCharacter() {

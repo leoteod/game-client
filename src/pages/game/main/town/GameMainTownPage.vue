@@ -107,7 +107,7 @@
         </div>
       </div>
       <div
-        v-if="character.level < 10"
+        v-if="character.level < 35"
         data-area="battleArenaLocked"
         class="absolute text-white top-[52%] left-[17%] w-[43%] h-[35%] flex items-center justify-center text-center"
       >
@@ -131,7 +131,7 @@
           <div
             class="bg-black border border-black rounded-lg px-2 py-1 text-xs"
           >
-            Unlocks at Lvl. 10
+            Unlocks at Lvl. 35
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@
         </div>
       </div>
       <div
-        v-if="character.level < 15"
+        v-if="character.level < 40"
         data-area="skillTreeLocked"
         class="absolute text-white top-[51%] left-[1%] w-[16%] h-[15%] flex items-center justify-center text-center"
       >
@@ -170,7 +170,7 @@
           <div
             class="bg-black border border-black rounded-lg px-2 py-1 text-xs"
           >
-            Unlocks at Lvl. 15
+            Unlocks at Lvl. 40
           </div>
         </div>
       </div>
@@ -185,7 +185,7 @@
         </div>
       </div>
       <div
-        v-if="character.level < 20"
+        v-if="character.level < 45"
         data-area="dungeonLocked"
         class="absolute text-white top-[51%] right-[6%] w-[22%] h-[24%] flex items-center justify-center text-center"
       >
@@ -209,7 +209,7 @@
           <div
             class="bg-black border border-black rounded-lg px-2 py-1 text-xs"
           >
-            Unlocks at Lvl. 20
+            Unlocks at Lvl. 45
           </div>
         </div>
       </div>

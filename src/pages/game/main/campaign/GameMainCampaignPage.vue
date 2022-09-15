@@ -257,6 +257,8 @@ import { CampaignProgressController } from "@/api/Controllers/Http/CampaignProgr
 import type { CampaignProgressInterface } from "@/api/Interfaces/CampaignProgress/CampaignProgressInterface";
 import { CampaignController } from "@/api/Controllers/Http/Campaign/CampaignController";
 import type { CampaignInterface } from "@/api/Interfaces/Campaign/CampaignInterface";
+import eventBus from "@/events/eventBus";
+import { EnumEvents } from "@/events/events";
 
 const { numberWithCommas } = useFormat();
 
@@ -348,8 +350,11 @@ async function onBattleNextStage() {
   if (response.success) {
     console.log("WON");
     await onGetCampaignProgress();
+    eventBus.$emit(EnumEvents.reloadCharacter);
+    eventBus.$emit(EnumEvents.reloadResources);
   } else {
     console.log("lost");
+    eventBus.$emit(EnumEvents.reloadResources);
   }
 }
 </script>

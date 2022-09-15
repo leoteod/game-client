@@ -40,9 +40,11 @@
 
 <script lang="ts" setup>
 import type { ResourceInterface } from "@/api/Interfaces/Resource/ResourceInterface";
-import { onMounted, reactive } from "vue";
+import { onBeforeUnmount, onMounted, reactive } from "vue";
 import { ResourcesController } from "@/api/Controllers/Http/Resource/ResourcesController";
 import { useFormat } from "@/composables/useFormat";
+import eventBus from "@/events/eventBus";
+import { EnumEvents } from "@/events/events";
 
 const { numberWithCommas } = useFormat();
 
@@ -50,6 +52,17 @@ const { scopedIndex } = ResourcesController();
 
 onMounted(async () => {
   await onGetCharacterResources();
+  eventBus.$on(
+    EnumEvents.reloadResources,
+    async () => await onGetCharacterResources()
+  );
+});
+
+onBeforeUnmount(() => {
+  eventBus.$off(
+    EnumEvents.reloadResources,
+    async () => await onGetCharacterResources()
+  );
 });
 
 const resource = reactive<{ data: ResourceInterface | object }>({
