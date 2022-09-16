@@ -1,28 +1,6 @@
 <template>
   <div class="fixed top-2 left-2 z-10">
-    <div
-      class="relative avatar rounded-lg overflow-hidden z-10"
-      :class="['desktop:w-32 desktop:h-32', 'mobile:w-20 mobile:h-20']"
-    >
-      <img
-        class="w-full h-full block"
-        src="/images/avatar/bg.png"
-        alt="Avatar BG"
-      />
-      <img
-        class="absolute top-0 right-0 bottom-0 left-0 w-full h-full block"
-        :src="`/images/avatar/${props.character?.avatar || 0}.png`"
-        alt="Avatar"
-      />
-      <div
-        class="level absolute bg-zinc-900 border border-black text-xxs text-white font-bold rounded"
-        :class="[
-          'desktop:py-1 desktop:px-3 desktop:bottom-1 desktop:left-1',
-          'mobile:py-0.5 mobile:px-1.5 mobile:bottom-0.5 mobile:left-0.5',
-        ]"
-        v-text="`${props.character?.level} Level`"
-      />
-    </div>
+    <game-ui-avatar :character="character" />
     <div
       class="absolute top-0 left-[calc(100%-7px)] pl-[7px] bg-black bg-opacity-50 border border-black h-8 rounded-tr-lg"
     >
@@ -90,6 +68,7 @@ import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInt
 import { EnumEquipmentItemProps } from "@/api/Enums/Equipment/EquipmentProps";
 import { ref } from "vue";
 import { useFormat } from "@/composables/useFormat";
+import GameUiAvatar from "@/components/game/ui/GameUiAvatar/GameUiAvatar.vue";
 
 interface Props {
   character: CharacterInterface;

@@ -7,19 +7,22 @@
     />
     <game-ui-full-loader v-if="loading" />
     <div
-      class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center"
+      class="absolute top-0 right-0 bottom-2 left-0 flex items-end justify-center"
       v-else
     >
       <div>
         <ul
-          class="h-[55vh] overflow-y-auto overflow-x-hidden bg-black bg-opacity-50 rounded-lg p-6 flex flex-col gap-2"
+          class="h-[75vh] overflow-y-auto overflow-x-hidden flex flex-col gap-2"
         >
           <li
-            class="w-[40vw] text-white bg-black bg-opacity-50 p-2 border border-white border-opacity-10 rounded flex gap-2"
+            class="w-[45vw] relative text-white bg-black bg-opacity-80 p-2 border rounded flex gap-4 items-center"
             v-for="arena in arenaCharacters.data"
-            :class="{
-              'text-red-500': props.character.id === arena.character.id,
-            }"
+            :class="[
+              returnRankBorderBG(arena.rank),
+              {
+                'text-green-500': props.character.id === arena.character.id,
+              },
+            ]"
             :key="arena.id"
             @click="
               props.character.id === arena.character.id
@@ -27,10 +30,44 @@
                 : onBattle(arena.character.id)
             "
           >
-            <span v-text="`Rank: ${arena.rank || 'Unranked'}`" />
-            <span
-              v-text="`[${arena.character.level}] ${arena.character.name}`"
+            <game-ui-avatar
+              :character="arena.character"
+              :class="['desktop:w-24 desktop:h-24', 'mobile:w-16 mobile:h-16']"
             />
+            <div
+              class="absolute top-2 right-2 text-xs py-1 px-2 font-bold"
+              :class="returnRankLabelBG(arena.rank)"
+            >
+              <span v-text="`${arena.rank || 'Unranked'}`" />
+            </div>
+            <div>
+              <div
+                class="text-lg font-border--black"
+                v-text="arena.character.name"
+              />
+              <div
+                class="text-sm font-border--black text-yellow-500"
+                v-text="
+                  `Power: ${numberWithCommas(arena.character?.stats?.power)}`
+                "
+              />
+            </div>
+            <div
+              v-if="props.character.id !== arena.character.id"
+              class="absolute bottom-2 right-2"
+            >
+              <button
+                class="bg-black flex items-center gap-2 text-xs py-1 px-2 whitespace-nowrap rounded"
+                type="button"
+              >
+                Battle
+                <img
+                  class="block w-3 h-3"
+                  src="@/assets/images/svg/swords.svg"
+                  alt="Battle"
+                />
+              </button>
+            </div>
           </li>
         </ul>
       </div>
@@ -44,12 +81,16 @@ import { ArenaController } from "@/api/Controllers/Http/Arena/ArenaController";
 import type { ArenaInterface } from "@/api/Interfaces/Arena/ArenaInterface";
 import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
+import GameUiAvatar from "@/components/game/ui/GameUiAvatar/GameUiAvatar.vue";
+import { useFormat } from "@/composables/useFormat";
 
 interface Props {
   character: CharacterInterface;
 }
 
 const props = defineProps<Props>();
+
+const { numberWithCommas } = useFormat();
 
 const arenaCharacters = reactive<{ data: ArenaInterface[] | [] }>({
   data: [],
@@ -75,6 +116,32 @@ async function onBattle(defenderId: number) {
     } else {
       alert("lost");
     }
+  }
+}
+
+function returnRankBorderBG(rank: number) {
+  switch (rank) {
+    case 1:
+      return "border-[#ffd700]";
+    case 2:
+      return "border-[#c0c0c0]";
+    case 3:
+      return "border-[#cd7f32]";
+    default:
+      return "border-white border-opacity-10";
+  }
+}
+
+function returnRankLabelBG(rank: number) {
+  switch (rank) {
+    case 1:
+      return "bg-[#ffd700] text-black rounded-full";
+    case 2:
+      return "bg-[#c0c0c0] text-black rounded-full";
+    case 3:
+      return "bg-[#cd7f32] text-black rounded-full";
+    default:
+      return "bg-neutral-900 text-white rounded";
   }
 }
 </script>
