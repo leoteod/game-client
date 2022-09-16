@@ -1,16 +1,9 @@
 <template>
   <div class="w-screen h-screen">
     <game-ui-init-loader v-if="initialLoading" />
-    <div v-show="loading">
-      <img
-        class="fixed top-0 right-0 bottom-0 left-0 object-fill w-full h-full"
-        src="@/assets/images/town/bg.jpg"
-        alt="Town"
-      />
-      <game-ui-full-loader />
-    </div>
-    <div class="w-full h-full" v-show="!loading">
+    <div class="w-full h-full">
       <game-ui-player :character="character.data" />
+      <game-ui-resources />
       <button
         v-if="!path.includes('/main/town')"
         @click="$router.push({ name: 'town' })"
@@ -43,17 +36,17 @@ import { computed, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
-import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLoader.vue";
+import GameUiResources from "@/components/game/ui/GameUiResources/GameUiResources.vue";
 import router from "@/router";
 import GameUiInitLoader from "@/components/game/ui/GameUiInitLoader/GameUiInitLoader.vue";
 import eventBus from "@/events/eventBus";
-import {EnumEvents} from "@/events/events";
+import { EnumEvents } from "@/events/events";
 
 const character = reactive<{ data: CharacterInterface | object }>({
   data: {},
 });
 const route = useRoute();
-const { scopedIndex, loading } = CharactersController();
+const { scopedIndex } = CharactersController();
 
 const path = computed(() => route.path);
 

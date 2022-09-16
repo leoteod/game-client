@@ -39,15 +39,22 @@
               class="relative bg-black text-white w-20 h-20 flex items-center justify-center rounded-lg border border-black border-opacity-25 opacity-50"
               :class="{
                 'opacity-100':
-                  campaign.id >= returnCurrentStageData?.campaign_id,
+                  campaign.id <= returnCurrentStageData?.campaign_id,
+                'opacity-100 border-yellow-400 border-opacity-100 border-2 bg-yellow-900':
+                  campaign.id === returnCurrentStageData?.campaign_id + 1,
                 'border-green-400 border-opacity-100 border-2 bg-green-900 animate-bounce':
                   campaign.id === returnCurrentStageData?.campaign_id,
               }"
               v-for="(campaign, campaignIndex) in returnCampaigns"
               :key="campaign.id"
+              @click="
+                campaign.id < returnCurrentStageData?.campaign_id
+                  ? onBattlePreviousStage(campaign.id)
+                  : null
+              "
             >
               <div class="flex flex-col gap-2 items-center">
-                <div class="text-xs">Stage {{ campaignIndex + 1 }}</div>
+                <div class="text-xs" v-text="`Stage ${campaignIndex + 1}`" />
                 <div
                   class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
                 >
@@ -71,37 +78,34 @@
               <button
                 class="pointer-events-none absolute top-0 right-0 bottom-0 left-0 bg-green-700 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold animate-ping"
                 type="button"
-              >
-                Start Campaign
-              </button>
+                v-text="'Start Campaign'"
+              />
               <button
                 class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
                 type="button"
                 @click="onBattleNextStage()"
-              >
-                Start Campaign
-              </button>
+                v-text="'Start Campaign'"
+              />
             </div>
           </div>
           <template v-else>
             <div>
               <button
-                class="bg-neutral-800 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
+                class="border-green-400 border-2 bg-green-900 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
                 type="button"
-              >
-                Battle current stage
-              </button>
+                @click="onBattleCurrentStage()"
+                v-text="'Battle current stage'"
+              />
             </div>
             <div
               v-if="returnNextStageData ? returnNextStageData.id < 35 : false"
             >
               <button
-                class="bg-green-500 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold animate-pulse"
+                class="border-yellow-400 border-2 bg-yellow-900 px-4 py-2 text-sm uppercase rounded-sm text-white font-bold"
                 type="button"
                 @click="onBattleNextStage()"
-              >
-                Go to next stage
-              </button>
+                v-text="'Go to next stage'"
+              />
             </div>
           </template>
         </div>
@@ -328,7 +332,9 @@ const returnRewardsInfo = computed(() => {
 
 const {
   scopedIndex: getProgress,
+  previous: onPreviousStage,
   next: onNextStage,
+  current: onCurrentStage,
   loading: progressLoading,
 } = CampaignProgressController();
 const campaignProgress = reactive<{ data: CampaignProgressInterface | null }>({
@@ -344,6 +350,32 @@ async function onGetCampaignProgress() {
 const isLoading = computed(() => {
   return progressLoading.value || campaignLoading.value;
 });
+
+async function onBattlePreviousStage(campaignId: number) {
+  const response = await onPreviousStage(campaignId);
+  if (response.success) {
+    console.log("WON");
+    await onGetCampaignProgress();
+    eventBus.$emit(EnumEvents.reloadCharacter);
+    eventBus.$emit(EnumEvents.reloadResources);
+  } else {
+    console.log("lost");
+    eventBus.$emit(EnumEvents.reloadResources);
+  }
+}
+
+async function onBattleCurrentStage() {
+  const response = await onCurrentStage();
+  if (response.success) {
+    console.log("WON");
+    await onGetCampaignProgress();
+    eventBus.$emit(EnumEvents.reloadCharacter);
+    eventBus.$emit(EnumEvents.reloadResources);
+  } else {
+    console.log("lost");
+    eventBus.$emit(EnumEvents.reloadResources);
+  }
+}
 
 async function onBattleNextStage() {
   const response = await onNextStage();

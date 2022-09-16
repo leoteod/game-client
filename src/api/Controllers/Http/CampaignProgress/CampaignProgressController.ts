@@ -19,6 +19,43 @@ export function CampaignProgressController() {
       };
     }
   }
+
+  async function previous(campaignId: number) {
+    const response = await fetch({
+      method: "get",
+      url: `scoped/${url}/battle/previous/${campaignId}`,
+      delay: 1000,
+    });
+    if (!response.error) {
+      return {
+        success: true,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  }
+
+  async function current() {
+    const response = await fetch({
+      method: "get",
+      url: `scoped/${url}/battle/current`,
+      delay: 1000,
+    });
+    if (!response.error) {
+      return {
+        success: true,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  }
+
   async function next() {
     const response = await fetch({
       method: "get",
@@ -37,5 +74,5 @@ export function CampaignProgressController() {
     }
   }
 
-  return { scopedIndex, next, loading };
+  return { scopedIndex, previous, current, next, loading };
 }

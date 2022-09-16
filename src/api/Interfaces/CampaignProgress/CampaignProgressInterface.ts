@@ -4,7 +4,6 @@ import type { CampaignInterface } from "@/api/Interfaces/Campaign/CampaignInterf
 export interface CampaignProgressInterface {
   [EnumCampaignProgressProps.id]?: number;
   [EnumCampaignProgressProps.stars]: number;
-  [EnumCampaignProgressProps.stars_requirements]: object;
   [EnumCampaignProgressProps.campaign_id]: number;
   [EnumCampaignProgressProps.character_id]: number;
   // Generated
