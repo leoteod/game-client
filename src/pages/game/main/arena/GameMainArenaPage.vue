@@ -83,6 +83,8 @@ import GameUiFullLoader from "@/components/game/ui/GameUiFullLoader/GameUiFullLo
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiAvatar from "@/components/game/ui/GameUiAvatar/GameUiAvatar.vue";
 import { useFormat } from "@/composables/useFormat";
+import eventBus from "@/events/eventBus";
+import { EnumEvents } from "@/events/events";
 
 interface Props {
   character: CharacterInterface;
@@ -113,9 +115,22 @@ async function onBattle(defenderId: number) {
   if (response.success) {
     if (response.data.results.winner_id === props.character.id) {
       await onGetArenaCharacter();
+      eventBus.$emit(EnumEvents.showGlobalAlert, {
+        type: "success",
+        message: response?.message,
+      });
     } else {
-      alert("lost");
+      eventBus.$emit(EnumEvents.showGlobalAlert, {
+        type: "info",
+        message: response?.message,
+      });
     }
+    eventBus.$emit(EnumEvents.reloadResources);
+  } else {
+    eventBus.$emit(EnumEvents.showGlobalAlert, {
+      type: "error",
+      message: response?.data?.message,
+    });
   }
 }
 

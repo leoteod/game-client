@@ -383,10 +383,9 @@ async function onBattleNextStage() {
     console.log("WON");
     await onGetCampaignProgress();
     eventBus.$emit(EnumEvents.reloadCharacter);
-    eventBus.$emit(EnumEvents.reloadResources);
   } else {
     console.log("lost");
-    eventBus.$emit(EnumEvents.reloadResources);
   }
+  eventBus.$emit(EnumEvents.reloadResources);
 }
 </script>

@@ -27,6 +27,7 @@
       </button>
       <router-view :character="character.data" />
     </div>
+    <game-ui-global-alert />
   </div>
 </template>
 
@@ -37,6 +38,7 @@ import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiResources from "@/components/game/ui/GameUiResources/GameUiResources.vue";
+import GameUiGlobalAlert from "@/components/game/ui/GameUiGlobalAlert/GameUiGlobalAlert.vue";
 import router from "@/router";
 import GameUiInitLoader from "@/components/game/ui/GameUiInitLoader/GameUiInitLoader.vue";
 import eventBus from "@/events/eventBus";

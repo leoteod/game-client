@@ -14,10 +14,16 @@ export function ArenaController() {
       return {
         success: true,
         data: response.data.data,
+        message: response.data?.message || "",
+        message_code: response.data?.message_code || "",
       };
     } else {
       return {
         success: false,
+        data: response?.errorData || {
+          message: "",
+          message_code: "",
+        },
       };
     }
   }

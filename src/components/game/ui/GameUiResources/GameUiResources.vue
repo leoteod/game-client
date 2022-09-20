@@ -1,6 +1,21 @@
 <template>
   <div class="fixed top-2 left-1/2 flex gap-4 whitespace-nowrap">
     <div
+      v-if="routeName === 'arena'"
+      class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
+    >
+      <img
+        class="block w- h-4"
+        src="@/assets/images/svg/arena_energy.svg"
+        alt="Arena Energy"
+      />
+      <div
+        class="font-border--black text-xs"
+        v-text="`${resource.data?.arena_energy || 0} / 10`"
+      />
+    </div>
+    <div
+      v-else
       class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"
     >
       <img
@@ -40,11 +55,12 @@
 
 <script lang="ts" setup>
 import type { ResourceInterface } from "@/api/Interfaces/Resource/ResourceInterface";
-import { onBeforeUnmount, onMounted, reactive } from "vue";
+import { computed, onBeforeUnmount, onMounted, reactive } from "vue";
 import { ResourcesController } from "@/api/Controllers/Http/Resource/ResourcesController";
 import { useFormat } from "@/composables/useFormat";
 import eventBus from "@/events/eventBus";
 import { EnumEvents } from "@/events/events";
+import { useRoute } from "vue-router";
 
 const { numberWithCommas } = useFormat();
 
@@ -64,6 +80,9 @@ onBeforeUnmount(() => {
     async () => await onGetCharacterResources()
   );
 });
+
+const route = useRoute();
+const routeName = computed(() => route.name);
 
 const resource = reactive<{ data: ResourceInterface | object }>({
   data: {},
