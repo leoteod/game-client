@@ -33,16 +33,29 @@
 
 <script setup lang="ts">
 import { CharactersController } from "@/api/Controllers/Http/Character/CharactersController";
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+} from "vue";
 import { useRoute } from "vue-router";
 import GameUiPlayer from "@/components/game/ui/GameUiPlayer/GameUiPlayer.vue";
 import type { CharacterInterface } from "@/api/Interfaces/Character/CharacterInterface";
 import GameUiResources from "@/components/game/ui/GameUiResources/GameUiResources.vue";
-import GameUiGlobalAlert from "@/components/game/ui/GameUiGlobalAlert/GameUiGlobalAlert.vue";
 import router from "@/router";
-import GameUiInitLoader from "@/components/game/ui/GameUiInitLoader/GameUiInitLoader.vue";
 import eventBus from "@/events/eventBus";
 import { EnumEvents } from "@/events/events";
+
+const GameUiInitLoader = defineAsyncComponent(
+  () => import("@/components/game/ui/GameUiInitLoader/GameUiInitLoader.vue")
+);
+
+const GameUiGlobalAlert = defineAsyncComponent(
+  () => import("@/components/game/ui/GameUiGlobalAlert/GameUiGlobalAlert.vue")
+);
 
 const character = reactive<{ data: CharacterInterface | object }>({
   data: {},
