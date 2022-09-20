@@ -391,7 +391,7 @@ async function won(response: any) {
 function lost(response: any) {
   eventBus.$emit(EnumEvents.reloadResources);
   eventBus.$emit(EnumEvents.showGlobalAlert, {
-    type: "info",
+    type: "error",
     message: response?.data?.message,
   });
 }

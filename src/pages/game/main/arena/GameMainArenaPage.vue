@@ -141,7 +141,7 @@ async function onBattle(defenderId: number) {
       });
     } else {
       eventBus.$emit(EnumEvents.showGlobalAlert, {
-        type: "info",
+        type: "error",
         message: response?.message,
       });
     }

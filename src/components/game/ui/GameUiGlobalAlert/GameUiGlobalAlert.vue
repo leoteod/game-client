@@ -2,7 +2,8 @@
   <transition name="fade">
     <div
       v-if="show"
-      class="fixed top-0 right-0 bottom-0 left-0 bg-black z-50 bg-opacity-50"
+      class="fixed top-0 right-0 bottom-0 left-0 z-50 bg-opacity-30"
+      :class="[returnAlertBgColor]"
     />
   </transition>
   <div
@@ -117,6 +118,21 @@ onMounted(() => {
 
 onBeforeUnmount(async () => {
   eventBus.$off(EnumEvents.showGlobalAlert, () => onShowAlert);
+});
+
+const returnAlertBgColor = computed(() => {
+  switch (data.type) {
+    case "warning":
+      return "bg-yellow-500";
+    case "info":
+      return "bg-blue-500";
+    case "success":
+      return "bg-green-500";
+    case "error":
+      return "bg-red-500";
+    default:
+      return "bg-neutral-500";
+  }
 });
 
 const returnAlertColor = computed(() => {
