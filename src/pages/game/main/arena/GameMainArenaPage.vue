@@ -42,7 +42,7 @@
             </div>
             <div>
               <div
-                class="text-lg font-border--black"
+                class="text font-border--black"
                 v-text="arena.character.name"
               />
               <div
@@ -51,6 +51,26 @@
                   `Power: ${numberWithCommas(arena.character?.stats?.power)}`
                 "
               />
+              <div class="flex items-center gap-3 text-xs mt-2">
+                <div
+                  class="font-border--black text-blue-400"
+                  v-text="`Won: ${arena.won}`"
+                />
+                <div class="text-white" v-text="'|'" />
+                <div
+                  class="font-border--black text-red-400"
+                  v-text="`Lost: ${arena.lost}`"
+                />
+                <div class="text-white" v-text="'|'" />
+                <div
+                  class="font-border--black text-orange-400"
+                  v-text="
+                    `WR ${(
+                      (arena.won / (arena.lost + arena.won) || 0) * 100
+                    ).toFixed(2)}%`
+                  "
+                />
+              </div>
             </div>
             <div
               v-if="props.character.id !== arena.character.id"

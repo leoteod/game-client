@@ -5,6 +5,8 @@ import type { ServerInterface } from "@/api/Interfaces/Server/ServerInterface";
 export interface ArenaInterface {
   [EnumArenaProps.id]?: number;
   [EnumArenaProps.rank]: number;
+  [EnumArenaProps.won]: number;
+  [EnumArenaProps.lost]: number;
   [EnumArenaProps.character_id]: number | null;
   [EnumArenaProps.server_id]: number | null;
   character?: CharacterInterface | null;
