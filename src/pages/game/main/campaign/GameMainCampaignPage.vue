@@ -354,38 +354,45 @@ const isLoading = computed(() => {
 async function onBattlePreviousStage(campaignId: number) {
   const response = await onPreviousStage(campaignId);
   if (response.success) {
-    console.log("WON");
-    await onGetCampaignProgress();
-    eventBus.$emit(EnumEvents.reloadCharacter);
-    eventBus.$emit(EnumEvents.reloadResources);
+    await won(response);
   } else {
-    console.log("lost");
-    eventBus.$emit(EnumEvents.reloadResources);
+    lost(response);
   }
 }
 
 async function onBattleCurrentStage() {
   const response = await onCurrentStage();
   if (response.success) {
-    console.log("WON");
-    await onGetCampaignProgress();
-    eventBus.$emit(EnumEvents.reloadCharacter);
-    eventBus.$emit(EnumEvents.reloadResources);
+    await won(response);
   } else {
-    console.log("lost");
-    eventBus.$emit(EnumEvents.reloadResources);
+    lost(response);
   }
 }
 
 async function onBattleNextStage() {
   const response = await onNextStage();
   if (response.success) {
-    console.log("WON");
-    await onGetCampaignProgress();
-    eventBus.$emit(EnumEvents.reloadCharacter);
+    await won(response);
   } else {
-    console.log("lost");
+    lost(response);
   }
+}
+
+async function won(response: any) {
+  await onGetCampaignProgress();
+  eventBus.$emit(EnumEvents.reloadCharacter);
   eventBus.$emit(EnumEvents.reloadResources);
+  eventBus.$emit(EnumEvents.showGlobalAlert, {
+    type: "success",
+    message: response?.message,
+  });
+}
+
+function lost(response: any) {
+  eventBus.$emit(EnumEvents.reloadResources);
+  eventBus.$emit(EnumEvents.showGlobalAlert, {
+    type: "info",
+    message: response?.data?.message,
+  });
 }
 </script>

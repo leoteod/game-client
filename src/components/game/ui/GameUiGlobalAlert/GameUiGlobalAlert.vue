@@ -1,4 +1,10 @@
 <template>
+  <transition name="fade">
+    <div
+      v-if="show"
+      class="fixed top-0 right-0 bottom-0 left-0 bg-black z-50 bg-opacity-50"
+    />
+  </transition>
   <div
     class="fixed top-10 right-0 left-0 z-50 flex items-center justify-center pointer-events-none transition-transform duration-700"
     :style="{ transform: `translateY(${show ? '0' : '-100px'})` }"
