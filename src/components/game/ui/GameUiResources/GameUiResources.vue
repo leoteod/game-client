@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-2 left-1/2 flex gap-4 whitespace-nowrap">
+  <div class="fixed top-10 left-1/2 flex gap-4 whitespace-nowrap">
     <div
       v-if="routeName === 'arena'"
       class="bg-black bg-opacity-75 border border-black text-white rounded-lg px-2 py-0.5 flex gap-1 items-center"

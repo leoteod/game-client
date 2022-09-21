@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-2 left-2 z-10">
+  <div class="fixed top-10 left-2 z-10">
     <game-ui-avatar :character="character" />
     <div
       class="absolute top-0 left-[calc(100%-7px)] pl-[7px] bg-black bg-opacity-50 border border-black h-8 rounded-tr-lg"

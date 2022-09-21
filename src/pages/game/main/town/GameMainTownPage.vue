@@ -2,7 +2,7 @@
   <div class="w-full h-full">
     <!--Settings-->
     <button
-      class="fixed top-2 right-2 z-40 border border-black bg-black bg-opacity-75 w-12 h-12 flex items-center justify-center text-white rounded-lg"
+      class="fixed top-10 right-2 z-40 border border-black bg-black bg-opacity-75 w-12 h-12 flex items-center justify-center text-white rounded-lg"
       type="button"
     >
       <svg
