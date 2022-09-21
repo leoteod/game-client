@@ -68,6 +68,12 @@ const routes = [
                 component: () =>
                   import("../pages/game/main/arena/GameMainArenaPage.vue"),
               },
+              {
+                path: "inventory",
+                name: "inventory",
+                component: () =>
+                    import("../pages/game/main/inventory/GameMainInventoryPage.vue"),
+              },
             ],
           },
         ],

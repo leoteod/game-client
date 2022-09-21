@@ -50,7 +50,20 @@
     </div>
     <!--Right Fixed Actions-->
     <div class="fixed bottom-2 right-2 z-40 flex items-center gap-2">
-      <!--Shop-->
+      <!--Inventory-->
+      <button
+        class="border border-black bg-black bg-opacity-75 px-4 h-10 flex gap-2 text-sm items-center justify-center text-white rounded-lg"
+        type="button"
+        @click="$router.push({ name: 'inventory' })"
+      >
+        <span>Inventory</span>
+        <img
+          class="block w-4 h-4"
+          src="@/assets/images/svg/backpack.svg"
+          alt="Inventory"
+        />
+      </button>
+      <!--Clan-->
       <button
         class="border border-black bg-black bg-opacity-75 px-4 h-10 flex gap-2 text-sm items-center justify-center text-white rounded-lg"
         type="button"
