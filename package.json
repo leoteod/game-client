@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "dev:desktop": "tauri dev",
+    "dev:app": "tauri dev",
+    "build:app": "tauri build",
+    "build:app:debug": "tauri build --debug",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
