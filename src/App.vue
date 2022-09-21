@@ -9,5 +9,9 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 import ReloadPWA from "@/components/pwa/ReloadPWA.vue";
-import GameUiFrame from "@/components/game/ui/GameUiFrame/GameUiFrame.vue";
+import { defineAsyncComponent } from "vue";
+
+const GameUiFrame = defineAsyncComponent(
+  () => import("@/components/game/ui/GameUiFrame/GameUiFrame.vue")
+);
 </script>
